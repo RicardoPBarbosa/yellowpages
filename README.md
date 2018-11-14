@@ -18,3 +18,10 @@ Install dependencies locally
 `docker-compose up --build`
 
 Now you can open the web app on `http://0.0.0.0:3333`
+
+There's a default user created on the database files for the app authentication with the following info:
+
+```
+  email: user@email.com
+  password: secret
+```
