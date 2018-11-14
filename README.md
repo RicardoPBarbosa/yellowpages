@@ -6,7 +6,7 @@
 
 `git clone https://github.com/RicardoPBarbosa/pawb_yellowpages.git`
 
-Open the project in your favorite editor
+`cd pawb_yellowpages`
 
 `cp .env.example .env`
 
