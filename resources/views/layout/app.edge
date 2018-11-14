@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Páginas Amarelas</title>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/solid.css" integrity="sha384-osqezT+30O6N/vsMqwW8Ch6wKlMofqueuia2H7fePy42uC05rm1G+BUPSd2iBSJL" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/regular.css" integrity="sha384-4e3mPOi7K1/4SAx8aMeZqaZ1Pm4l73ZnRRquHFWzPh2Pa4PMAgZm8/WNh6ydcygU" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/brands.css" integrity="sha384-Px1uYmw7+bCkOsNAiAV5nxGKJ0Ixn5nChyW8lCK1Li1ic9nbO5pC/iXaq27X5ENt" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/fontawesome.css" integrity="sha384-BzCy2fixOYd0HObpx3GMefNqdbA7Qjcc91RgYeDjrHTIEXqiF00jKvgQG0+zY/7I" crossorigin="anonymous">
+  {{ style('app') }}
+  @!section('styles')
+</head>
+<body>
+  <nav class="navbar is-dark">
+    <div class="container">
+      <div class="navbar-brand">
+        <a href="/" class="navbar-item">
+          <img src="{{ assetsUrl('storage/logo.png') }}" alt="paginasamarelas.pt">
+        </a>
+
+        <button class="button navbar-burger is-dark" data-target="navMenu" aria-label="menu" aria-expanded="false">
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </button>
+      </div>
+
+      <div class="navbar-menu" id="navMenu">
+        @loggedIn
+          <div class="navbar-start">
+            <a href="{{ route('dashboard') }}" class="navbar-item">
+              <i class="fas fa-tachometer-alt"></i> &nbsp; Dashboard
+            </a>
+          </div>
+          <div class="navbar-end">
+              <a href="/logout" class="navbar-item"><i class="fas fa-sign-out-alt"></i> &nbsp; Sair</a>
+          </div>
+        @else
+          <div class="navbar-end">
+            <a href="/login" class="navbar-item">Entrar</a>
+            <a href="/register" class="navbar-item">Registar</a>
+          </div>
+        @endloggedIn
+      </div>
+    </div>
+  </nav>
+
+  @!section('content')
+
+  {{ script('js/app') }}
+  @!section('scripts')
+</body>
+</html>

@@ -1,0 +1,54 @@
+@layout('layout.app')
+@section('styles')
+  {{ style('js/map/ol') }}
+@endsection
+
+@section('content')
+  <section class="map">
+      <div id="map">
+      </div>
+      <span> alt + scroll mouse para fazer zoom no mapa </span>
+  </section>
+
+
+  <section class="results columns">
+    @each(result in results.data)
+      <div class="column">
+        <div class="result">
+          <span class="is-hidden coordinates">{{ result.latitude + ', ' + result.longitude }}</span>
+          <div class="logo" style="background-image: url(/storage/uploads/{{ (result.logo && result.logo !== 'placeholder.png' ? 'results/' + result.logo : 'placeholder.png') }}"></div>
+          <div class="info">
+            <span class="name">
+              ${result.name}
+              <span class="res_number">{{ $loop.index + 1 }}</span>
+            </span>
+            <span class="email">${result.email}</span>
+            <span class="address">${result.address} <small>|</small> ${result.postal_code}</span>
+            <span class="locality">${result.locality}</span>
+            <button class="button is-warning is-fullwidth" onclick="showPhoneNumber(this, '${result.phone}')"><i class="fas fa-phone"></i>&nbsp; Contacto</button>
+          </div>
+        </div>
+      </div>
+    @endeach
+    @if(results.data.length < 3)
+      @each(item in range((3 - results.data.length)))
+        <div class="column"></div>
+      @endeach
+    @endif
+  </section>
+  <section class="paginate-results has-text-centered pager-nav" style="margin-bottom: 40px;">
+    @each(page in range(results.lastPage+1))
+      @if(page && results.lastPage > 1)
+        <a class="{{ results.page == page ? 'active' : '' }}" href="{{ url + '&page=' + page }}">{{ page }}</a>
+      @endif
+    @endeach
+  </section>
+  @include('includes.authors')
+@endsection
+
+@section('scripts')
+  {{ script('js/map/ol') }}
+  {{ script('js/map') }}
+@endsection
+
+

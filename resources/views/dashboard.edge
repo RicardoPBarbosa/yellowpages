@@ -1,0 +1,184 @@
+@layout('layout.app')
+
+@section('content')
+  <section class="hero is-warning is-medium">
+    <div class="hero-body container" style="padding-top:4rem;padding-bottom:4rem">
+      <div class="columns">
+        <div class="column is-one-quarter" style="padding-top: 7%;">
+          <h1 class="title" style="font-size: 3rem;">
+            INSERIR
+          </h1>
+          <h2 class="subtitle" style="font-size: 2rem;margin-bottom: 4rem;">
+            EMPRESA
+          </h2>
+          <form action="{{ appUrl('results') }}" method="POST" enctype="multipart/form-data">
+            {{ csrfField() }}
+          <div class="control">
+            <button class="button is-dark is-medium is-uppercase">Submeter</button> <br>
+            <button type="button" class="button is-white is-normal is-uppercase" style="margin-top: 20px" onclick="document.querySelector('form').reset()"><i class="fas fa-eraser"></i> &nbsp; Reset</button>
+          </div>
+        </div>
+        <div class="column">
+          <div class="columns" style="position:relative">
+            <div class="column">
+              <label class="label">Nome</label>
+              <div class="control is-expanded">
+                <input class="input {{ hasErrorFor('name') ? 'is-danger' : '' }}" type="text" name="name" value="{{ old('name', '') }}">
+              </div>
+              {{ elIf('<span class="help is-danger">$self</span>', getErrorFor('name'), hasErrorFor('name')) }}
+            </div>
+            <div class="column">
+              <label class="label">Email</label>
+              <div class="control is-expanded">
+                <input class="input {{ hasErrorFor('email') ? 'is-danger' : '' }}" type="text" name="email" value="{{ old('email', '') }}">
+              </div>
+              {{ elIf('<span class="help is-danger">$self</span>', getErrorFor('email'), hasErrorFor('email')) }}
+            </div>
+            <div class="column"></div>
+            <div class="avatar-container">
+              <div class="avatar-upload">
+                <div class="avatar-edit">
+                    <input type="file" name="logo" id="imageUpload" accept=".png, .jpg, .jpeg" />
+                    <label for="imageUpload"><i class="fas fa-pen"></i></label>
+                </div>
+                <div class="avatar-preview">
+                    <div id="imagePreview"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="columns">
+            <div class="column is-two-thirds">
+              <label class="label">Morada</label>
+              <div class="control is-expanded">
+                <input class="input {{ hasErrorFor('address') ? 'is-danger' : '' }}" type="text" name="address" value="{{ old('address', '') }}">
+              </div>
+              {{ elIf('<span class="help is-danger">$self</span>', getErrorFor('address'), hasErrorFor('address')) }}
+            </div>
+            <div class="column"></div>
+          </div>
+          <div class="columns">
+            <div class="column">
+              <label class="label">Código Postal</label>
+              <div class="control is-expanded">
+                <input class="input {{ hasErrorFor('postal_code') ? 'is-danger' : '' }}" type="text" name="postal_code" value="{{ old('postal_code', '') }}">
+              </div>
+              {{ elIf('<span class="help is-danger">$self</span>', getErrorFor('postal_code'), hasErrorFor('postal_code')) }}
+            </div>
+            <div class="column">
+              <label class="label">Freguesia</label>
+              <div class="control is-expanded">
+                <input class="input {{ hasErrorFor('locality') ? 'is-danger' : '' }}" type="text" name="locality" value="{{ old('locality', '') }}">
+              </div>
+              {{ elIf('<span class="help is-danger">$self</span>', getErrorFor('locality'), hasErrorFor('locality')) }}
+            </div>
+            <div class="column">
+              <label class="label">Contacto</label>
+              <div class="control is-expanded">
+                <input class="input {{ hasErrorFor('phone') ? 'is-danger' : '' }}" type="text" name="phone" value="{{ old('phone', '') }}">
+              </div>
+              {{ elIf('<span class="help is-danger">$self</span>', getErrorFor('phone'), hasErrorFor('phone')) }}
+            </div>
+          </div>
+          <div class="columns">
+            <div class="column">
+              <label class="label">Longitude</label>
+              <div class="control is-expanded">
+                <input class="input {{ hasErrorFor('longitude') ? 'is-danger' : '' }}" type="text" name="longitude" value="{{ old('longitude', '') }}">
+              </div>
+              {{ elIf('<span class="help is-danger">$self</span>', getErrorFor('longitude'), hasErrorFor('longitude')) }}
+            </div>
+            <div class="column">
+              <label class="label">Latitude</label>
+              <div class="control is-expanded">
+                <input class="input {{ hasErrorFor('latitude') ? 'is-danger' : '' }}" type="text" name="latitude" value="{{ old('latitude', '') }}">
+              </div>
+              {{ elIf('<span class="help is-danger">$self</span>', getErrorFor('latitude'), hasErrorFor('latitude')) }}
+            </div>
+          </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <div id="notificationContainer">
+    <div id="floatingNotification">
+      @include('includes.notification')
+    </div>
+  </div>
+  <div class="section" style="padding-top: 4rem;">
+    <div class="container">
+      <table class="table is-bordered is-striped is-fullwidth" id="table">
+        <thead>
+          <tr>
+            <th>Nome</th>
+            <th>Email</th>
+            <th>Contacto</th>
+            <th>Morada</th>
+            <th>Código Postal</th>
+            <th>Freguesia</th>
+            <th class="has-text-centered">Apagar</th>
+          </tr>
+        </thead>
+        <tbody>
+          @each(result in results)
+            <tr data-id="{{ result.id }}">
+              <td>
+                <input class="input is-static" name="name" type="text" value="{{ result.name }}" readonly>
+              </td>
+              <td>
+                  <input class="input is-static" name="email" type="text" value="{{ result.email }}" readonly>
+              </td>
+              <td>
+                  <input class="input is-static" name="phone" type="text" value="{{ result.phone }}" readonly>
+              </td>
+              <td>
+                  <input class="input is-static" name="address" type="text" value="{{ result.address }}" readonly>
+              </td>
+              <td>
+                  <input class="input is-static" name="postal_code" type="text" value="{{ result.postal_code }}" readonly>
+              </td>
+              <td>
+                <input class="input is-static" name="locality" type="text" value="{{ result.locality }}" readonly>
+              </td>
+              <td class="has-text-centered">
+                {{ csrfField() }}
+                <a href="javascript:void(0)" onclick="deleteModal('{{ result.id }}', '{{ result.name }}')"><i class="far fa-trash-alt has-text-danger"></i></a>
+              </td>
+            </tr>
+          @endeach
+        </tbody>
+      </table>
+      <div id="box" class="pager-nav"></div>
+    </div>
+  </div>
+  @include('includes.authors')
+  <div class="modal delete-result-modal">
+    <div class="modal-background"></div>
+    <div class="modal-content has-text-centered deleteResultModal">
+      Tem a certeza que pretende eliminar esta empresa ? <br>
+      <form method="post" action="{{ appUrl('results/?_method=DELETE') }}">
+        {{ csrfField() }}
+        <input type="hidden" id="result_id" name="id" value="">
+        <b style="font-size: 1.5em;" id="result_name"></b>
+        <p style="margin-top: 20px;">
+          <a class="button is-large is-danger is-outlined" style="margin-right: 80px;">
+            <span class="icon">
+              <i class="fas fa-times"></i>
+            </span>
+          </a>
+          <button class="button is-large is-success is-outlined">
+            <span class="icon">
+              <i class="fas fa-check"></i>
+            </span>
+          </button>
+        </p>
+      </form>
+    </div>
+  </div>
+@endsection
+
+@section('scripts')
+  {{ script('js/paginator') }}
+  {{ script('js/dashboard') }}
+@endsection

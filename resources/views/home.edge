@@ -1,0 +1,95 @@
+@layout('layout.app')
+
+@section('styles')
+  {{ style('js/map/ol') }}
+@endsection
+
+@section('content')
+  <section class="hero is-warning is-large">
+    <div class="hero-body">
+      <div class="container">
+        <div class="slider-container">
+          <div class="slider-content">
+            @if(featured.length)
+              @each(feature in featured)
+                <div class="slider-single">
+                <img class="slider-single-image" src="{{ appUrl(feature.logo && feature.logo !== 'placeholder.png' ? 'storage/uploads/results/' + feature.logo : 'storage/uploads/placeholder.png') }}" alt="{{ feature.name }}" />
+                  <a class="slider-single-download" href="javascript:void(0);" onclick="openModal('{{ feature.id }}')"><i class="fas fa-plus"></i> Info </a>
+                  <h1 class="slider-single-title">{{ feature.name }}</h1>
+                  <span class="slider-single-likes" href="javascript:void(0);">
+                    <i class="far fa-eye"></i>
+                    <p>{{ feature.search_count }}</p>
+                  </span>
+                </div>
+                <div class="modal feature-modal" id="feat-{{ feature.id }}">
+                  <div class="modal-background"></div>
+                  <div class="modal-content">
+                    <p><i class="far fa-envelope"></i> {{ feature.email }}</p>
+                    <p><i class="fas fa-phone rotated"></i> {{ feature.phone }}</p>
+                    <p><i class="fas fa-home"></i> {{ feature.address }} | {{ feature.postal_code }}</p>
+                    <p><i class="fas fa-map-marker-alt"></i> {{ feature.locality }}</p>
+                  </div>
+                  <button class="modal-close is-large" aria-label="close"></button>
+                </div>
+              @endeach
+            @else
+                <div class="no-features"><i class="fab fa-searchengin"></i> <span>Ainda não houve pesquisas</span></div>
+            @endif
+          </div>
+          @if(featured.length)
+          <a class="slider-left" href="javascript:void(0);"><i class="fa fa-arrow-left"></i></a>
+          <a class="slider-right" href="javascript:void(0);"><i class="fa fa-arrow-right"></i></a>
+          @endif
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="search-container">
+    <form action="{{ appUrl('results/search') }}" method="GET">
+      <div class="search-bar">
+        <div class="field is-grouped is-grouped-centered">
+          <label class="field-label is-medium has-text-centered"><b>Nome</b></label>
+          <div class="control is-expanded">
+            <input class="input is-large" type="text" name="name">
+          </div>
+          <label class="field-label is-medium has-text-centered"><b>em</b></label>
+          <div class="control is-expanded">
+            <input class="input is-large" type="text" name="place">
+          </div>
+          <div class="control"></div>
+          <div class="control is-expanded">
+            <button class="button is-large is-warning is-fullwidth">
+              <span class="icon">
+                <i class="fas fa-search"></i>
+              </span>
+              <span class="is-size-5 has-text-weight-semibold">Pesquisar</span>
+            </button>
+          </div>
+        </div>
+        @include('includes.notification')
+      </div>
+    </form>
+  </section>
+  <section class="search-background"></section>
+  <section class="map">
+    <div id="map">
+      </div>
+      <span> alt + scroll mouse para fazer zoom no mapa </span>
+  </section>
+  <section class="results columns"></section>
+  {{ csrfField() }}
+  <section id="resultsPagination" class="paginate-results has-text-centered pager-nav" style="margin-bottom: 40px;">
+    @each(page in range(pages+1))
+      @if(page && pages > 1)
+        <button onclick="changePage(this, '{{ page }}')">{{ page }}</button>
+      @endif
+    @endeach
+  </section>
+  @include('includes.authors')
+@endsection
+
+@section('scripts')
+  {{ script('js/slideshow') }}
+  {{ script('js/map/ol') }}
+  {{ script('js/map') }}
+@endsection

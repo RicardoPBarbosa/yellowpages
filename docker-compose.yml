@@ -1,0 +1,27 @@
+version: "3"
+services:
+  postgres:
+    container_name: postgres
+    restart: always
+    image: postgres
+    volumes:
+      - ./postgres_data:/var/lib/postgresql/data
+    ports:
+      - '5433:5432'
+    environment:
+      - POSTGRES_DB=yellow_pages
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+  app:
+    build: .
+    restart: always
+    container_name: app
+    ports:
+      - '3333:3333'
+    volumes:
+      - ./:/var/www/app
+    depends_on:
+      - postgres
+
+volumes:
+  postgres_data:

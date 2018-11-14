@@ -1,0 +1,58 @@
+@layout('layout.app')
+
+@section('content')
+<div class="section">
+  <div class="container">
+    <div class="columns">
+      <div class="column is-4 is-offset-4">
+        <h2 class="title has-text-centered">Entrar</h2>
+
+        @include('includes.notification')
+
+        <form action="{{ route('login') }}" method="post">
+          {{ csrfField() }}
+          
+          <div class="field">
+            <label for="email" class="label">Email</label>
+
+            <div class="control">
+              <input
+                type="email"
+                class="input"
+                name="email"
+                id="email">
+            </div>
+          </div>
+          
+          <div class="field">
+            <label for="password" class="label">Password</label>
+
+            <div class="control">
+              <input
+                type="password"
+                class="input"
+                name="password"
+                id="password">
+            </div>
+          </div>
+
+          <div class="field">
+            <label class="checkbox">
+              <input type="checkbox" name="remember">
+              Lembrar-me
+            </label>
+          </div>
+
+          <div class="control">
+            <button type="submit" class="button is-dark is-fullwidth is-uppercase">Entrar</button>
+          </div>
+        </form>
+
+        <p class="has-text-centered" style="margin-top: 10px">
+          <a href="/password/reset">Esqueceu-se da password?</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+@endsection
