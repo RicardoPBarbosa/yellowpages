@@ -2,6 +2,15 @@
 
 #### Simple app to make use of the NodeJS web framework AdonisJS
 
+### Insert businesses & hot-edit their information
+![First GIF](yellowpages1.gif)
+
+### Homepage with most searched businesses & search functionality
+![Second GIF](yellowpages2.gif)
+
+### New business as the most searched one & businesses listing
+![Third GIF](yellowpages3.gif)
+
 ## Steps
 
 `git clone https://github.com/RicardoPBarbosa/pawb_yellowpages.git`
@@ -9,6 +18,8 @@
 `cd pawb_yellowpages`
 
 `cp .env.example .env`
+
+`adonis key:generate`
 
 Install dependencies locally
 

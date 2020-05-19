@@ -1,6 +1,10 @@
+.DS_Store
+__MACOSX
+
 # Node modules
 node_modules
 package-lock.json
+postgres_data
 
 # Adonis directory for storing tmp files
 tmp

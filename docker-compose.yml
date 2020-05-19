@@ -3,7 +3,7 @@ services:
   postgres:
     container_name: postgres
     restart: always
-    image: postgres
+    image: postgres:10
     volumes:
       - ./postgres_data:/var/lib/postgresql/data
     ports:
